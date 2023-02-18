@@ -1,0 +1,153 @@
+Q1. What is MongoDB? Explain non-relational databases in short. In which scenarios it is preferred to use MongoDB over SQL databases?
+Ans--> MongoDB is a popular document-oriented NoSQL database that uses a flexible document data model instead of a traditional relational schema. It is an open-source, high-performance, and horizontally scalable database that is widely used for building modern web applications.
+
+Non-relational databases, also known as NoSQL databases, are databases that do not rely on the traditional relational data model used by SQL databases. Instead, they use different data models such as key-value pairs, document-oriented, graph-based, or column-family. Non-relational databases are designed to handle large volumes of unstructured or semi-structured data and are highly scalable, distributed, and flexible.
+
+There are several scenarios where it is preferred to use MongoDB over SQL databases:
+
+1.When dealing with large volumes of unstructured or semi-structured data, such as social media posts, sensor data, or log files.
+
+2.When there is a need for high write performance, such as in real-time analytics or IoT applications.
+
+3.When building applications with a flexible schema, where data structures may change frequently.
+
+4.When building applications that require high availability and scalability, as MongoDB is designed to be horizontally scalable and can handle large amounts of data.
+
+5.When there is a need for a flexible data model that can store complex data structures, such as nested arrays or documents.
+
+In summary, MongoDB is a popular NoSQL database that is widely used in scenarios where there is a need for high scalability, flexibility, and performance with unstructured data.
+
+Q2. State and Explain the features of MongoDB.
+Ans--> MongoDB is a popular NoSQL document-oriented database that offers a variety of features that make it useful for modern web application development. Some of the key features of MongoDB include:
+
+1.Document-Oriented Data Model: MongoDB uses a flexible document data model instead of a traditional relational schema. A document is a collection of key-value pairs that represent complex data structures and can be nested within other documents. This makes it easy to represent complex data types, such as arrays and embedded documents.
+
+2.Dynamic Schema: MongoDB has a dynamic schema that allows for changes to the data model without needing to modify the database schema. This makes it easy to accommodate changes in data structures and reduces the need for database migrations.
+
+3.High Availability: MongoDB is designed to provide high availability with automatic failover and replication. It uses a distributed architecture with automatic sharding, which makes it easy to scale horizontally.
+
+4.Indexing: MongoDB supports a variety of indexing options, including text search, geospatial indexing, and compound indexing. This makes it easy to optimize queries and improve performance.
+
+5.Aggregation: MongoDB provides powerful aggregation and data processing capabilities, including map-reduce and the aggregation pipeline. This allows for complex queries and data processing to be performed within the database.
+
+6.Native Support for JSON: MongoDB natively supports JSON data, which makes it easy to integrate with modern web applications that use JSON for data exchange.
+
+7.Easy Integration: MongoDB has native drivers for many programming languages, making it easy to integrate with different programming stacks. Additionally, it supports a variety of data interchange formats, including BSON and JSON.
+
+8.Security: MongoDB offers several security features, including authentication, authorization, and encryption. It also supports auditing and monitoring, which makes it easy to track user activity and detect potential security threats.
+
+In summary, MongoDB offers a flexible and scalable document-oriented data model, dynamic schema, powerful indexing and aggregation capabilities, native support for JSON, easy integration with different programming stacks, and robust security features. These features make it a popular choice for modern web application development.
+
+Q5. Explain how you can use the find() method to query the MongoDB database. Write a simple code to demonstrate this.
+Ans--> The find() method in MongoDB is used to retrieve documents from a collection that match a given query. The find() method returns a cursor object, which can be used to iterate over the result set and retrieve individual documents.
+
+Here's an example code that demonstrates how to use the find() method to query a MongoDB database:
+
+from pymongo import MongoClient
+
+# establish a connection to MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+
+# create or use a database
+mydb = client['test_database']
+
+# create or use a collection
+mycol = mydb['test_collection']
+
+# insert some records
+mycol.insert_many([
+    {'name': 'John', 'age': 30, 'city': 'New York'},
+    {'name': 'Amy', 'age': 26, 'city': 'San Francisco'},
+    {'name': 'Bill', 'age': 40, 'city': 'Los Angeles'},
+    {'name': 'Kate', 'age': 35, 'city': 'Seattle'}
+])
+
+# find all records in the collection
+records = mycol.find()
+
+# iterate over the result set and print each record
+for record in records:
+    print(record)
+    
+# find records that match a query
+query = {'age': {'$gt': 30}}
+records = mycol.find(query)
+
+# iterate over the result set and print each record
+for record in records:
+    print(record)
+
+In this code, we first establish a connection to MongoDB and create a database and a collection. We then insert some records into the collection.
+
+To retrieve all records in the collection, we call the find() method without any arguments, which returns a cursor object that we can iterate over using a for loop. We print each record in the result set.
+
+To retrieve records that match a specific query, we pass a query object to the find() method. In this example, we find all records where the age is greater than 30. We print each record in the result set. Note that we use the $gt operator to specify a condition that matches values greater than the specified value.
+
+This is just a simple example, but the find() method supports a wide range of query operators and options, which makes it a powerful tool for querying MongoDB databases.
+
+Q6. Explain the sort() method. Give an example to demonstrate sorting in MongoDB.
+Ans--> The sort() method in MongoDB is used to sort the result set of a query in ascending or descending order based on one or more fields in the documents.
+
+The sort() method takes one or more arguments, which specify the fields to sort by and the order in which to sort them. The sort order can be specified using the pymongo.ASCENDING constant (for ascending order) or the pymongo.DESCENDING constant (for descending order). By default, the sort() method sorts the result set in ascending order.
+
+Here's an example code that demonstrates sorting in MongoDB using the sort() method:
+
+from pymongo import MongoClient, ASCENDING, DESCENDING
+
+# establish a connection to MongoDB
+client = MongoClient('mongodb://localhost:27017/')
+
+# create or use a database
+mydb = client['test_database']
+
+# create or use a collection
+mycol = mydb['test_collection']
+
+# insert some records
+mycol.insert_many([
+    {'name': 'John', 'age': 30, 'city': 'New York'},
+    {'name': 'Amy', 'age': 26, 'city': 'San Francisco'},
+    {'name': 'Bill', 'age': 40, 'city': 'Los Angeles'},
+    {'name': 'Kate', 'age': 35, 'city': 'Seattle'}
+])
+
+# sort the result set by name in ascending order
+records = mycol.find().sort('name', ASCENDING)
+
+# iterate over the result set and print each record
+print("Ascending sort by name:")
+for record in records:
+    print(record)
+    
+# sort the result set by age in descending order
+records = mycol.find().sort('age', DESCENDING)
+
+# iterate over the result set and print each record
+print("Descending sort by age:")
+for record in records:
+    print(record)
+
+In this code, we first establish a connection to MongoDB and create a database and a collection. We then insert some records into the collection.
+
+To sort the result set, we call the sort() method on the cursor object returned by the find() method. In the first example, we sort the result set by name in ascending order. We use the ASCENDING constant to specify the sort order, which is the default.
+
+In the second example, we sort the result set by age in descending order. We use the DESCENDING constant to specify the sort order.
+
+Note that we can also sort the result set based on multiple fields by passing a list of field names and sort orders to the sort() method. For example, mycol.find().sort([('age', DESCENDING), ('name', ASCENDING)]) would sort the result set by age in descending order, and then by name in ascending order for any documents with the same age value.
+
+Q7. Explain why delete_one(), delete_many(), and drop() is used.
+Ans--> In MongoDB, the delete_one() and delete_many() methods are used to remove one or many documents from a collection based on a specified filter. The drop() method is used to delete an entire collection.
+
+Here's a brief explanation of each method:
+
+delete_one(filter): This method removes the first document that matches the specified filter. If multiple documents match the filter, only the first one will be deleted.
+
+delete_many(filter): This method removes all documents that match the specified filter.
+
+drop(): This method deletes the entire collection from the database.
+
+The delete_one() and delete_many() methods are useful for removing specific documents from a collection based on certain criteria, such as a specific value in a field. For example, if we have a collection of customer orders, we might use the delete_many() method to remove all orders that are over a year old and no longer relevant.
+
+The drop() method is useful when we need to delete an entire collection from the database. This might be necessary if the collection is no longer needed or if it needs to be recreated with a different structure or format.
+
+It's important to note that these methods are irreversible and will permanently delete data from the database. It's recommended to use caution when using these methods, and to make backups of your data before making any significant changes to your collections or databases.
